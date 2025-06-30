@@ -1,7 +1,7 @@
 <?php
 
 function get_mongo_connection() {
-    $connection_string = "mongodb://cncflora:3o7b7zxr3fxa@edalcin.ddns.me:27017/?authSource=admin&authMechanism=DEFAULT";
+    $connection_string = "mongodb:/?authSource=admin&authMechanism=DEFAULT";
     $db_name = "dwc2json";
 
     try {
