@@ -2,16 +2,25 @@
 FROM php:8.3-apache
 
 # Instalar dependências do sistema necessárias para a extensão MongoDB e outras ferramentas úteis
+# Adicionadas dependências para snappy, zlib, zstd, sasl, ssl, utf8proc, e g++ (necessário para compilação C++)
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     libssl-dev \
     pkg-config \
     libcurl4-openssl-dev \
+    libsasl2-dev \
+    libsnappy-dev \
+    libz-dev \
+    libzstd-dev \
+    libutf8proc-dev \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar a extensão MongoDB via PECL
 # A opção "yes" responde automaticamente aos prompts do PECL
+# As flags que estavam falhando são passadas implicitamente pelo PECL
+# mas as libs precisam estar presentes no sistema.
 RUN yes | pecl install mongodb \
     && docker-php-ext-enable mongodb
 
